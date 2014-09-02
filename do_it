@@ -211,6 +211,12 @@ fi
 j_jpeg()
 {
   cd ${LIBJPEG}
+  if [ -f 'stamp_j_jpeg' ] ; then
+    echo $0
+    check_status $? Nonneeded to building ${LIBJPEG}
+    exit 1
+  fi
+  
   CFLAGS="${CPU_CFLAGS}" \
      ./configure --host=${TARGET} --prefix=${PREFIX} \
      --includedir=${PREFIX}/lib/include \
@@ -230,6 +236,7 @@ j_jpeg()
   fi
 
   cd ..
+  touch stamp_j_jpeg
 }
 
 if [ ${do_jpeg} = yes ] ; then
